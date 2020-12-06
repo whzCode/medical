@@ -2,18 +2,18 @@ package com.whz.system.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.whz.system.pojo.Role;
+import com.whz.system.pojo.Department;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 角色表 Mapper 接口
+ *  Mapper 接口
  * </p>
  *
  * @author 卫宏哲
- * @since 2020-11-23
+ * @since 2020-11-28
  */
 @Mapper
-public interface RoleMapper extends BaseMapper<Role> {
+public interface DepartmentMapper extends BaseMapper<Department> {
 
 }

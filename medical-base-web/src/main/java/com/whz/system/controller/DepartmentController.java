@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 菜单表 前端控制器
+ *  前端控制器
  * </p>
  *
  * @author 卫宏哲
- * @since 2020-11-23
+ * @since 2020-11-28
  */
 @RestController
-@RequestMapping("/menu")
-public class MenuController {
+@RequestMapping("/department")
+public class DepartmentController {
 
 }
 

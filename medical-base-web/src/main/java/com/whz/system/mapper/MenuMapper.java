@@ -1,5 +1,7 @@
 package com.whz.system.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.whz.system.pojo.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -11,6 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author 卫宏哲
  * @since 2020-11-23
  */
+@Mapper
 public interface MenuMapper extends BaseMapper<Menu> {
 
 }

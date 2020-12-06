@@ -1,18 +1,31 @@
 package com.whz.system.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.whz.response.Result;
+import com.whz.security.entity.SelfUserEntity;
+import com.whz.security.util.ResultUtil;
+import com.whz.security.util.SecurityUtil;
 import com.whz.system.pojo.User;
 import com.whz.system.service.UserService;
 
@@ -29,30 +42,26 @@ import io.swagger.models.auth.In;
  * @since 2020-11-23
  */
 @RestController
-@RequestMapping("/system/user")
+@RequestMapping("/user")
 @Api(value = "系统用户模块",tags = "系统用户接口")
 public class UserController {
-    @Autowired
+
+    @Resource
     private UserService userService;
 
-    @RequestMapping(value = "/findUsers",method = RequestMethod.GET)
-    @ApiOperation(value = "用户列表",notes = "查询所有用户信息")
-    public Result findUsers(){
-        List<User> list = userService.list();
-        return Result.ok().data("users",list);
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/info",method = RequestMethod.GET)
+    public Map<String,Object> userLogin(){
+        Map<String,Object> result = new HashMap<>();
+        SelfUserEntity userDetails = SecurityUtil.getUserInfo();
+        result.put("title","管理端信息");
+        result.put("data",userDetails);
+        return ResultUtil.resultSuccess(result);
     }
 
-    @GetMapping("/pageUserList")
-    public Result pageUserList(@RequestParam(required = true,defaultValue = "1")Integer current,
-                               @RequestParam(required = true,defaultValue = "7")Integer size){
-        //对用户进行分页，泛型中注入的就是用户实体类
-        Page<User> page = new Page<>(current,size);
-        Page<User> userPage = userService.page(page);
-        long total = userPage.getTotal();
-        List<User> records = userPage.getRecords();
-        return Result.ok().data("total",total).data("records",records);
 
-    }
+
+
 
 }
 
